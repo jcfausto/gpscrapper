@@ -1,6 +1,8 @@
 # Google Play Review Scrapper
 
-Google doesn´t provide a public API to retrieve reviews for a specific application. 
+[![Build Status](https://travis-ci.org/jcfausto/gpscrapper.svg)](https://travis-ci.org/jcfausto/gpscrapper)  [![Coverage Status](https://coveralls.io/repos/jcfausto/gpscrapper/badge.svg?branch=master&service=github)](https://coveralls.io/github/jcfausto/gpscrapper?branch=master)
+
+Google doesn´t provide a public API to retrieve reviews for a specific application.
 If you are the app´s owner you could download the reviews, otherwise there is no official way to get that.
 
 The main intent of this scrapper is to analyse the reviews in order to look for app´s weakness, so that you could identify what gaps the app don´t fill and maybe some opportunity arise.
