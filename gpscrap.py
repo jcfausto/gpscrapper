@@ -29,12 +29,12 @@ if __name__ == '__main__':
 
 	response = scrapper.go()
 
-	gpfilter = GooglePlayResponseParser(response)
-	parsed_response = gpfilter.parseResponse()
+	gpparser = GooglePlayResponseParser(response)
+	parsed_response = gpparser.parseResponse()
 
-	gpjsongen = GooglePlayParsedResponseTransformer(parsed_response)
+	gptransformer = GooglePlayParsedResponseTransformer(parsed_response)
 
-	json = gpjsongen.transform()
+	json = gptransformer.transform()
 
 	if output_format == "html":
 		json = json2html.convert(json = json)
