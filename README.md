@@ -24,5 +24,5 @@ Read the license before use it.
 python gpscrap.py --appid=com.mycompany.myapp --pagenum=1
 
 Optional:
---format=<json or html>
+--format=json or --format=html
 
