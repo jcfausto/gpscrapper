@@ -4,7 +4,7 @@ import json
 class GooglePlayParsedResponseTransformer(object):
 
     """
-    This are the necessary replacements on a parsed response in order to generate a json formatted output
+    Those are the necessary replacements on a parsed response in order to generate a json formatted output
     """
     __FIRST_TRANSFORMATION_RULE = ["<div class=\"review-body\"> <span class=\"review-title\">", "{\"review\": \""]
     __SECOND_TRANSFORMATION_RULE = ["<div class=\"review-link\" style=\"display:none\"> <a class=\"id-no-nav play-button tiny\" href=\"#\" target=\"_blank\">Resenha completa</a> </div> </div>", "\"}"]
