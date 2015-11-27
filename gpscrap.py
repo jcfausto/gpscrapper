@@ -1,36 +1,42 @@
 # -*- coding: utf-8 -*-
-"""Google Play Review Scrapper
+"""
+Google Play Review Scrapper
 
 Usage:
-  gpscrap.py --appid=<google-play-application-id> --pagenum=<page_num>
+  gpscrap.py --appid=<google-play-application-id> --pagenum=<page_num> [--format=<json_or_html>]
 
 Options:
-  --appid=<app_id>	The ID of the app where the reviews will be scrapped.
-  --page=<page_num> The review page number.
+  --appid=<app_id>	        The ID of the app where the reviews will be scrapped.
+  --page=<page_num>         The review page number.
+  --format=<json_or_html>   Optional parameter. Specifies the output format that could be json html. Outputs json by default.
 """
 from docopt import docopt
-from scrapengine import ScrapEngine
-import re
-from BeautifulSoup import BeautifulSoup
+
+from gpengine.scrapengine import ScrapEngine
+from gputils.gpparser import GooglePlayResponseParser
+from gputils.gptransformer import GooglePlayParsedResponseTransformer
+
+#to generate the html output
+from json2html import *
 
 if __name__ == '__main__':
 	arguments = docopt(__doc__, version='Google Play Review Scrapper V1.0')
 	application_id = arguments["--appid"]
 	page_number = arguments["--pagenum"]
+	output_format = arguments["--format"]
 
 	scrapper = ScrapEngine(application_id, page_number)
 
-	body = scrapper.go()
+	response = scrapper.go()
 
-	#you could try this expression here: http://pythex.org/
-	filtered = re.match(r'^\)]}\'\s*\[\["ecr",1,(?P<body>"[^"].*"),[0-9]]\s*]', body).group('body')
-	converted = filtered.decode('unicode-escape')
+	gpfilter = GooglePlayResponseParser(response)
+	parsed_response = gpfilter.parseResponse()
 
-	soup = BeautifulSoup(converted)
-	review_bodies = str(soup.findAll("div", {"class": "review-body"}))
-		
-	json_start = review_bodies.replace("<div class=\"review-body\"> <span class=\"review-title\">", "{\"review\": \"")
-	json_end = json_start.replace("<div class=\"review-link\" style=\"display:none\"> <a class=\"id-no-nav play-button tiny\" href=\"#\" target=\"_blank\">Resenha completa</a> </div> </div>", "\"}")
-	json_final = json_end.replace("</span>", "")
+	gpjsongen = GooglePlayParsedResponseTransformer(parsed_response)
 
-	print(json_final)
+	json = gpjsongen.transform()
+
+	if output_format == "html":
+		json = json2html.convert(json = json)
+
+	print(json)

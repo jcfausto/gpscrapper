@@ -13,7 +13,7 @@ Read the license before use it.
 
 1. Do a post request to google play.
 2. Do some transformations.
-3. Prints a json string.
+3. Outputs a json or html string
 
 ## What do you need before running the script
 
@@ -22,4 +22,7 @@ Read the license before use it.
 ## Usage
 
 python gpscrap.py --appid=com.mycompany.myapp --pagenum=1
+
+Optional:
+--format=<json or html>
 
