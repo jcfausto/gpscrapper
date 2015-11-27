@@ -7,6 +7,11 @@ python:
 
 install:
   - pip install -r requirements.txt
+  - pip install coverage
+  - pip install python-coveralls
 
 script:
-  - nosetests ./specs
+  - nosetests ./specs --with-coverage
+
+after_success:
+  - coveralls
